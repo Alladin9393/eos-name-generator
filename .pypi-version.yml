@@ -1,0 +1,9 @@
+package:
+  name: eos-name-generator
+
+ci:
+  name: travis
+
+branches:
+  development: develop
+  release: master

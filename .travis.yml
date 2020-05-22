@@ -1,0 +1,23 @@
+language: python
+
+sudo: required
+
+dist: xenial
+
+python:
+  - "3.6"
+  - "3.7"
+
+install:
+  - pip install -r requirements.txt
+  - pip install -r requirements-dev.txt
+
+script:
+  - radon cc eos_name_generator -nb --total-average
+  - cat requirements.txt requirements-dev.txt | safety check --stdin
+  - isort -rc eos_name_generator --diff
+  - flake8 eos_name_generator
+
+after_success:
+  - coverage report -m && coverage xml
+  - bash <(curl -s https://codecov.io/bash)
