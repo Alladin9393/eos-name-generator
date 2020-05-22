@@ -9,3 +9,4 @@ pep8-naming==0.10.0
 pypi-version==0.2.0
 pytest==5.4.2
 radon==4.1.0
+safety==1.9.0
