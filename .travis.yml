@@ -16,7 +16,7 @@ script:
   - radon cc eos_name_generator -nb --total-average
   - cat requirements.txt requirements-dev.txt | safety check --stdin
   - isort -rc eos_name_generator --diff
-  - flake8 eos_name_generator && flake8 tests
+  - flake8 eos_name_generator
 
 after_success:
   - coverage report -m && coverage xml
