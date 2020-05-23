@@ -1,7 +1,10 @@
 """
 Provide implementation of the BaseGenerator interfaces.
 """
-from abc import ABC, abstractmethod
+from abc import (
+    ABC,
+    abstractmethod,
+)
 
 
 class BaseGeneratorInterface(ABC):
@@ -16,7 +19,6 @@ class BaseGeneratorInterface(ABC):
 
         :return: `EOS` name
         """
-        pass
 
     @abstractmethod
     def generate_list(self) -> list:

@@ -3,8 +3,8 @@ Provide an implementation of the RandomNameGenerator interface.
 """
 from collections import defaultdict
 
-from eos_name_generator.interfaces import BaseGeneratorInterface
 from eos_name_generator.constants import RANDOM_NAME_GENERATOR_BASE_DATA_PATH
+from eos_name_generator.interfaces import BaseGeneratorInterface
 
 
 class RandomNameGenerator(BaseGeneratorInterface):
@@ -18,19 +18,19 @@ class RandomNameGenerator(BaseGeneratorInterface):
 
     def generate(self) -> str:
         """
-        Implementation of the generate `EOS` name method.
+        Generate `EOS` name method.
 
         :return: `EOS` name str
         """
-        pass
+        return ''
 
     def generate_list(self) -> list:
         """
-        Implementation of the generate `EOS` names list method.
+        Generate list of `EOS` names method.
 
         :return: list of `EOS` names
         """
-        pass
+        return []
 
     def __get_base_dict(self) -> defaultdict:
         with open(self.generation_base_data_path) as f:
@@ -45,7 +45,7 @@ class RandomNameGenerator(BaseGeneratorInterface):
 
     def __repr__(self):
         """
-        Implementation of the debug repr name.
+        Debug `repr` method.
 
         :return: RandomNameGenerator object state
         """
