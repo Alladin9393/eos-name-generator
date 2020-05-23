@@ -37,7 +37,7 @@ def test_sustainability_of_algorithm():
         assert EOS_NAME_LENGTH == len(name)
         assert isinstance(name, str)
 
-    # TODO: remove comment when `generate` method logic will be complete
+    # remove comment when `generate` method logic will be complete
     # generated_names_set = set(generated_names)
     # assert len(generated_names) == len(generated_names_set)
 
@@ -84,7 +84,6 @@ def test_generate_with_invalid_number_probabilities():
     Case: generate random name based on custom name probabilities.
     Expect: not valid number probabilities error message.
     """
-    pass
 
 
 def test_generate_with_non_existing_data_path():
