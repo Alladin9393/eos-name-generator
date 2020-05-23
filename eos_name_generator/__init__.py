@@ -8,3 +8,4 @@ The module provides 3 methods to generate a name:
     - markov chain text generation
     - recurrent neural network text generation
 """
+from eos_name_generator.random_generator.generator import RandomNameGenerator
