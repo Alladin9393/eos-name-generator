@@ -39,6 +39,7 @@ def test_sustainability_of_algorithm():
 
     # remove comment when `generate` method logic will be complete
     # generated_names_set = set(generated_names)
+
     # assert len(generated_names) == len(generated_names_set)
 
 
