@@ -21,9 +21,10 @@ class BaseGeneratorInterface(ABC):
         """
 
     @abstractmethod
-    def generate_list(self) -> list:
+    def generate_list(self, num: int) -> list:
         """
         Generate list of `EOS` names.
 
-        :return: list of `EOS` names
+        :param num: number of generated names in list.
+        :return: `EOS` name
         """

@@ -41,14 +41,19 @@ class RandomNameGenerator(BaseGeneratorInterface):
         mock_name = 'accountnum12'
         return mock_name
 
-    def generate_list(self) -> list:
+    def generate_list(self, num: int) -> list:
         """
         Generate list of `EOS` names method.
 
-        :return: list of `EOS` names
+        :param num: number of generated names in list.
+        :return: `EOS` name
         """
         mock_name = 'accountnum12'
-        return []
+        generated_list = []
+        for _ in range(num):
+            generated_list.append(mock_name)
+
+        return generated_list
 
     @property
     def seed_data_path(self) -> str:
