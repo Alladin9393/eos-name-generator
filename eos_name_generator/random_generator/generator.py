@@ -5,8 +5,8 @@ from collections import defaultdict
 
 from eos_name_generator.constants import (
     EOS_NAME_LENGTH,
-    RANDOM_NAME_GENERATOR_BASE_DATA_PATH,
-    RANDOM_NAME_GENERATOR_NUMBERS_PROBABILITIES,
+    SEED_DATA_PATH,
+    NUMBERS_PROBABILITIES,
 )
 from eos_name_generator.errors import ValidationDataError
 from eos_name_generator.interfaces import BaseGeneratorInterface
@@ -19,10 +19,16 @@ class RandomNameGenerator(BaseGeneratorInterface):
 
     def __init__(
             self,
-            generation_base_data_path=RANDOM_NAME_GENERATOR_BASE_DATA_PATH,
-            numbers_probabilities=RANDOM_NAME_GENERATOR_NUMBERS_PROBABILITIES,
+            seed_data_path=SEED_DATA_PATH,
+            numbers_probabilities=NUMBERS_PROBABILITIES,
     ):
-        self.__generation_base_data_path = generation_base_data_path
+        """
+        The constructor of the `RandomNameGenerator` class.
+
+        :param seed_data_path: path to the data based on which the name will be generated.
+        :param numbers_probabilities: the probability of occurrence of numbers in the generated word.
+        """
+        self.__seed_data_path = seed_data_path
         self.__numbers_probabilities = numbers_probabilities
         self.__base_dict = self.__get_base_dict()
 
@@ -43,8 +49,27 @@ class RandomNameGenerator(BaseGeneratorInterface):
         """
         return []
 
+    @property
+    def seed_data_path(self) -> str:
+        """
+        Get `seed_data_path` variable.
+
+        :return: `generation_base_data_path` string value
+        """
+        return self.__seed_data_path
+
+    @seed_data_path.setter
+    def seed_data_path(self, value):
+        """
+        Set `seed_data_path` value and generate new basic dictionary.
+
+        :param value: `seed_data_path` variable value
+        """
+        self.__seed_data_path = value
+        self.__base_dict = self.__get_base_dict()
+
     def __get_base_dict(self) -> defaultdict:
-        with open(self.__generation_base_data_path) as f:
+        with open(self.__seed_data_path) as f:
             data = f.read().splitlines()
 
         self.__validate_data(data)
@@ -68,6 +93,6 @@ class RandomNameGenerator(BaseGeneratorInterface):
         """
         Debug `repr` method.
 
-        :return: RandomNameGenerator object state
+        :return: `RandomNameGenerator` object state
         """
-        return f'<RandomNameGenerator({self.__generation_base_data_path}, {self.__numbers_probabilities})>'
+        return f'<RandomNameGenerator({self.__seed_data_path}, {self.__numbers_probabilities})>'
