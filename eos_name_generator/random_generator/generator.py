@@ -68,7 +68,32 @@ class RandomNameGenerator(BaseGeneratorInterface):
         self.__seed_data_path = value
         self.__base_dict = self.__get_base_dict()
 
+    @property
+    def numbers_probabilities(self) -> int:
+        """
+        Get `numbers_probabilities` variable.
+
+        :return: `numbers_probabilities` int value
+        """
+        return self.__numbers_probabilities
+
+    @numbers_probabilities.setter
+    def numbers_probabilities(self, value):
+        """
+        Set `numbers_probabilities` value.
+
+        :param value: `numbers_probabilities` variable value
+        """
+        if 0 < value > 1:
+            raise ValueError("The numbers probabilities value must be between 1 and 0.")
+
+        self.__numbers_probabilities = value
+
     def __get_base_dict(self) -> defaultdict:
+        """
+        Rend data from `seed_data_path` and transform it into `dictionary` object
+        where the key is the word length.
+        """
         with open(self.__seed_data_path) as f:
             data = f.read().splitlines()
 
@@ -82,6 +107,11 @@ class RandomNameGenerator(BaseGeneratorInterface):
 
     @staticmethod
     def __validate_data(data: list):
+        """
+        Seed data validation to generate the correct `eos` name.
+
+        :param data: data to be validated
+        """
         for word in data:
             is_valid_word_len = (len(word) <= EOS_NAME_LENGTH)
             is_valid_word = word.isalpha() and word.islower() and is_valid_word_len
