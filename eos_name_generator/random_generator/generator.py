@@ -30,7 +30,6 @@ class RandomNameGenerator(BaseGeneratorInterface):
         """
         self.seed_data_path = seed_data_path
         self.numbers_probabilities = numbers_probabilities
-        self.__base_dict = self.__get_base_dict()
 
     def generate(self) -> str:
         """
@@ -67,12 +66,13 @@ class RandomNameGenerator(BaseGeneratorInterface):
     @seed_data_path.setter
     def seed_data_path(self, value):
         """
-        Set `seed_data_path` value and generate new basic dictionary.
+        Set `seed_data_path` value and generate new basic dictionary and probabilities word length.
 
         :param value: `seed_data_path` variable value
         """
         self._seed_data_path = value
         self.__base_dict = self.__get_base_dict()
+        self.__probabilities_len_base_word = self.__get_probabilities_len_base_word()
 
     @property
     def numbers_probabilities(self) -> int:
@@ -126,6 +126,39 @@ class RandomNameGenerator(BaseGeneratorInterface):
 
             if not is_valid_word:
                 raise ValidationDataError("Data contains invalid characters or does not match the name length error")
+
+    def __get_probabilities_len_base_word(self) -> list:
+        """
+        Get probabilities list of the base word length based on word frequency.
+
+        :return: probabilities list
+        """
+        probabilities = []
+        base_dict_len = 0
+
+        for key in self.__base_dict:
+            word_count = len(self.__base_dict.get(key))
+            base_dict_len += word_count
+            probabilities.append(word_count)
+
+        probabilities = [word_count / base_dict_len for word_count in probabilities]
+
+        return probabilities
+
+    def __get_probability_alphabet_additional_word(self, additional_alphabet_words_len) -> int:
+        """
+        Get probability of the additional word alphabet.
+
+        Get probability of the additional word alphabet based on `numbers_probabilities`
+        and `additional_alphabet_words_len`.
+
+        :return: probabilities list
+        """
+        additional_words_probability = 0
+        if additional_alphabet_words_len:
+            additional_words_probability = 1 - self.numbers_probabilities
+
+        return additional_words_probability
 
     def __repr__(self):
         """
