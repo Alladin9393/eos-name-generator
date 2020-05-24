@@ -27,19 +27,18 @@ def test_sustainability_of_algorithm():
     Expect: name is returned.
     """
     number_of_test = 100_000
+    accuracy = 0.01
     name_generator = RandomNameGenerator()
-    generated_names = []
+    generated_names = name_generator.generate_list(num=number_of_test)
 
-    for _ in range(number_of_test):
-        name = name_generator.generate()
-        generated_names.append(name)
-
+    for name in generated_names:
         assert EOS_NAME_LENGTH == len(name)
         assert isinstance(name, str)
 
-    # remove comment when `generate` method logic will be complete
-    # generated_names_set = set(generated_names)
-    # assert len(generated_names) == len(generated_names_set)
+    generated_names_set = set(generated_names)
+    error_range = len(generated_names) - len(generated_names_set)
+
+    assert number_of_test * accuracy < error_range
 
 
 def test_generate_with_custom_data():
