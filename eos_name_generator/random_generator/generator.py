@@ -5,8 +5,8 @@ from collections import defaultdict
 
 from eos_name_generator.constants import (
     EOS_NAME_LENGTH,
-    SEED_DATA_PATH,
     NUMBERS_PROBABILITIES,
+    SEED_DATA_PATH,
 )
 from eos_name_generator.errors import ValidationDataError
 from eos_name_generator.interfaces import BaseGeneratorInterface
@@ -23,7 +23,7 @@ class RandomNameGenerator(BaseGeneratorInterface):
             numbers_probabilities=NUMBERS_PROBABILITIES,
     ):
         """
-        The constructor of the `RandomNameGenerator` class.
+        `RandomNameGenerator` constructor.
 
         :param seed_data_path: path to the data based on which the name will be generated.
         :param numbers_probabilities: the probability of occurrence of numbers in the generated word.
@@ -97,6 +97,8 @@ class RandomNameGenerator(BaseGeneratorInterface):
 
     def __get_base_dict(self) -> defaultdict:
         """
+        Rend data from `seed_data_path`.
+
         Rend data from `seed_data_path` and transform it into `dictionary` object
         where the key is the word length.
         """
