@@ -2,6 +2,7 @@
 Provide an implementation of the RandomNameGenerator interface.
 """
 from collections import defaultdict
+from numpy import random
 
 from eos_name_generator.constants import (
     EOS_NAME_LENGTH,
@@ -37,8 +38,18 @@ class RandomNameGenerator(BaseGeneratorInterface):
 
         :return: `EOS` name str
         """
-        mock_name = 'accountnum12'
-        return mock_name
+        base_dict_keys = list(self.__base_dict.keys())
+        base_word_len = random.choice(base_dict_keys, p=self.__probabilities_len_base_word)
+        additional_word_len = EOS_NAME_LENGTH - base_word_len
+
+        base_words = self.__base_dict.get(base_word_len)
+        additional_alphabet_words = []
+        if additional_word_len in self.__base_dict:
+            additional_alphabet_words = self.__base_dict.get(additional_word_len)
+
+        name = self.__get_random_name(base_words, additional_alphabet_words)
+
+        return name
 
     def generate_list(self, num: int) -> list:
         """
@@ -47,10 +58,10 @@ class RandomNameGenerator(BaseGeneratorInterface):
         :param num: number of generated names in list.
         :return: `EOS` name
         """
-        mock_name = 'accountnum12'
         generated_list = []
         for _ in range(num):
-            generated_list.append(mock_name)
+            name = self.generate()
+            generated_list.append(name)
 
         return generated_list
 
@@ -126,6 +137,36 @@ class RandomNameGenerator(BaseGeneratorInterface):
 
             if not is_valid_word:
                 raise ValidationDataError("Data contains invalid characters or does not match the name length error")
+
+    def __get_random_name(self, base_words, additional_alphabet_words) -> str:
+        """
+        Generate random name based on `base_words` and `additional_alphabet_words`.
+
+        :param base_words: list of words on the basis of which the name will be created
+        :param additional_alphabet_words: additional words to be added to the base word
+        :return: random name string
+        """
+        base_word = base_words[random.randint(0, len(base_words))]
+        additional_alphabet_words_len = len(additional_alphabet_words)
+        additional_word_alphabet_probability = self.__get_probability_alphabet_additional_word(
+            additional_alphabet_words_len,
+        )
+
+        numbers_probabilities = self.numbers_probabilities if additional_word_alphabet_probability else 1
+        additional_words_probabilities = [additional_word_alphabet_probability, numbers_probabilities]
+        is_additional_alphabet_word = random.choice([True, False], p=additional_words_probabilities)
+
+        additional_word = ''
+        if is_additional_alphabet_word:
+            additional_word = additional_alphabet_words[random.randint(0, additional_alphabet_words_len)]
+        else:
+            additional_numbers_len = EOS_NAME_LENGTH - len(base_word)
+            for _ in range(additional_numbers_len):
+                additional_char = str(random.randint(1, 5))
+                additional_word += additional_char
+
+        random_name = base_word + additional_word
+        return random_name
 
     def __get_probabilities_len_base_word(self) -> list:
         """
