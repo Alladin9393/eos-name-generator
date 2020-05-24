@@ -76,11 +76,14 @@ def test_generate_list():
     Except: lit names are returned.
     """
     number_of_names = 100
-    name_generator = RandomNameGenerator(num=number_of_names)
-    name = name_generator.generate_list()
+    name_generator = RandomNameGenerator()
+    names_list = name_generator.generate_list(num=number_of_names)
 
-    assert EOS_NAME_LENGTH == len(name)
-    assert isinstance(name, str)
+    assert number_of_names == len(names_list)
+
+    for name in names_list:
+        assert EOS_NAME_LENGTH == len(name)
+        assert isinstance(name, str)
 
 
 def test_generate_with_invalid_data():
