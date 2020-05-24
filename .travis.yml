@@ -18,6 +18,7 @@ script:
   - isort -rc eos_name_generator --diff
   - flake8 eos_name_generator && flake8 tests
   - coverage run -m pytest -vv tests
+  - python3 setup.py sdist && pip3 install dist/*.tar.gz
 
 after_success:
   - coverage report -m && coverage xml
