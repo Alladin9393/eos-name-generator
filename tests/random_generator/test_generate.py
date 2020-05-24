@@ -39,7 +39,6 @@ def test_sustainability_of_algorithm():
 
     # remove comment when `generate` method logic will be complete
     # generated_names_set = set(generated_names)
-
     # assert len(generated_names) == len(generated_names_set)
 
 
@@ -49,7 +48,7 @@ def test_generate_with_custom_data():
     Except: name is returned.
     """
     custom_data_path = dirname(__file__) + '/custom_data/data.txt'
-    name_generator = RandomNameGenerator(generation_base_data_path=custom_data_path)
+    name_generator = RandomNameGenerator(seed_data_path=custom_data_path)
     name = name_generator.generate()
 
     assert EOS_NAME_LENGTH == len(name)
@@ -61,12 +60,30 @@ def test_generate_with_custom_numbers_probabilities():
     Case: generate random name based on custom name probabilities.
     Expect: name is returned.
     """
-    numbers_probabilities = 0.3
-    name_generator = RandomNameGenerator(numbers_probabilities=numbers_probabilities)
-    name = name_generator.generate()
+    numbers_probabilities_tests = [0, 0.01, 0.3, 0.999, 1]
 
-    assert EOS_NAME_LENGTH == len(name)
-    assert isinstance(name, str)
+    for numbers_probabilities in numbers_probabilities_tests:
+        name_generator = RandomNameGenerator(numbers_probabilities=numbers_probabilities)
+        name = name_generator.generate()
+
+        assert EOS_NAME_LENGTH == len(name)
+        assert isinstance(name, str)
+
+
+def test_generate_list():
+    """
+    Case: generate random name list.
+    Except: lit names are returned.
+    """
+    number_of_names = 100
+    name_generator = RandomNameGenerator()
+    names_list = name_generator.generate_list(num=number_of_names)
+
+    assert number_of_names == len(names_list)
+
+    for name in names_list:
+        assert EOS_NAME_LENGTH == len(name)
+        assert isinstance(name, str)
 
 
 def test_generate_with_invalid_data():
@@ -77,14 +94,23 @@ def test_generate_with_invalid_data():
     invalid_data_path = dirname(__file__) + '/' + 'custom_data/invalid_data.txt'
 
     with pytest.raises(ValidationDataError):
-        RandomNameGenerator(generation_base_data_path=invalid_data_path)
+        RandomNameGenerator(seed_data_path=invalid_data_path)
 
 
-def test_generate_with_invalid_number_probabilities():
+def test_generate_with_invalid_numbers_probabilities():
     """
-    Case: generate random name based on custom name probabilities.
+    Case: generate random name based on custom number probabilities.
     Expect: not valid number probabilities error message.
     """
+    invalid_numbers_probabilities_tests = [-999, -1, -1.0, 1.01, 999]
+    invalid_numbers_probabilities_str = '0'
+
+    with pytest.raises(ValueError):
+        for numbers_probabilities in invalid_numbers_probabilities_tests:
+            RandomNameGenerator(numbers_probabilities=numbers_probabilities)
+
+    with pytest.raises(TypeError):
+        RandomNameGenerator(numbers_probabilities=invalid_numbers_probabilities_str)
 
 
 def test_generate_with_non_existing_data_path():
@@ -95,4 +121,15 @@ def test_generate_with_non_existing_data_path():
     non_existing_data_path = 'custom_data/data.txt'
 
     with pytest.raises(FileNotFoundError):
-        RandomNameGenerator(generation_base_data_path=non_existing_data_path)
+        RandomNameGenerator(seed_data_path=non_existing_data_path)
+
+
+def test_generate_with_non_existing_numbers_probabilities():
+    """
+    Case: generate random name with non-existing numbers_probabilities.
+    Expected: not supported between instances of 'int' and 'NoneType' error message.
+    """
+    non_existing_numbers_probabilities = None
+
+    with pytest.raises(TypeError):
+        RandomNameGenerator(numbers_probabilities=non_existing_numbers_probabilities)
