@@ -28,8 +28,8 @@ class RandomNameGenerator(BaseGeneratorInterface):
         :param seed_data_path: path to the data based on which the name will be generated.
         :param numbers_probabilities: the probability of occurrence of numbers in the generated word.
         """
-        self.__seed_data_path = seed_data_path
-        self.__numbers_probabilities = numbers_probabilities
+        self.seed_data_path = seed_data_path
+        self.numbers_probabilities = numbers_probabilities
         self.__base_dict = self.__get_base_dict()
 
     def generate(self) -> str:
@@ -47,6 +47,7 @@ class RandomNameGenerator(BaseGeneratorInterface):
 
         :return: list of `EOS` names
         """
+        mock_name = 'accountnum12'
         return []
 
     @property
@@ -56,7 +57,7 @@ class RandomNameGenerator(BaseGeneratorInterface):
 
         :return: `generation_base_data_path` string value
         """
-        return self.__seed_data_path
+        return self._seed_data_path
 
     @seed_data_path.setter
     def seed_data_path(self, value):
@@ -65,7 +66,7 @@ class RandomNameGenerator(BaseGeneratorInterface):
 
         :param value: `seed_data_path` variable value
         """
-        self.__seed_data_path = value
+        self._seed_data_path = value
         self.__base_dict = self.__get_base_dict()
 
     @property
@@ -75,7 +76,7 @@ class RandomNameGenerator(BaseGeneratorInterface):
 
         :return: `numbers_probabilities` int value
         """
-        return self.__numbers_probabilities
+        return self._numbers_probabilities
 
     @numbers_probabilities.setter
     def numbers_probabilities(self, value):
@@ -87,14 +88,14 @@ class RandomNameGenerator(BaseGeneratorInterface):
         if 0 < value > 1:
             raise ValueError("The numbers probabilities value must be between 1 and 0.")
 
-        self.__numbers_probabilities = value
+        self._numbers_probabilities = value
 
     def __get_base_dict(self) -> defaultdict:
         """
         Rend data from `seed_data_path` and transform it into `dictionary` object
         where the key is the word length.
         """
-        with open(self.__seed_data_path) as f:
+        with open(self.seed_data_path) as f:
             data = f.read().splitlines()
 
         self.__validate_data(data)
@@ -125,4 +126,4 @@ class RandomNameGenerator(BaseGeneratorInterface):
 
         :return: `RandomNameGenerator` object state
         """
-        return f'<RandomNameGenerator({self.__seed_data_path}, {self.__numbers_probabilities})>'
+        return f'<RandomNameGenerator({self.seed_data_path}, {self.numbers_probabilities})>'
