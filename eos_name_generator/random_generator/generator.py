@@ -177,7 +177,8 @@ class RandomNameGenerator(BaseGeneratorInterface):
         :param additional_alphabet_words: additional words to be added to the base word
         :return: random name string
         """
-        base_word = base_words[self.random_provider.randint(0, len(base_words) - 1)]
+        base_word_random_index = self.random_provider.randint(0, len(base_words) - 1)
+        base_word = base_words[base_word_random_index]
         additional_alphabet_words_len = len(additional_alphabet_words)
         additional_word_alphabet_probability = self.__get_probability_alphabet_additional_word(
             additional_alphabet_words_len,
@@ -189,8 +190,8 @@ class RandomNameGenerator(BaseGeneratorInterface):
 
         additional_word = ''
         if is_additional_alphabet_word:
-            random_index = self.random_provider.randint(0, additional_alphabet_words_len - 1)
-            additional_word = additional_alphabet_words[random_index]
+            additional_word_random_index = self.random_provider.randint(0, additional_alphabet_words_len - 1)
+            additional_word = additional_alphabet_words[additional_word_random_index]
         else:
             additional_numbers_len = EOS_NAME_LENGTH - len(base_word)
             for _ in range(additional_numbers_len):
