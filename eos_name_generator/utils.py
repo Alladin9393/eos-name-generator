@@ -1,8 +1,11 @@
 """
 Provide utils for eos_name_generator.
 """
-from abc import ABC, abstractmethod
 import random
+from abc import (
+    ABC,
+    abstractmethod,
+)
 
 
 class FastRandomChoiceInterface(ABC):
@@ -19,7 +22,6 @@ class FastRandomChoiceInterface(ABC):
         :param p: probabilities according to sequence.
         :return: random element from sequence
         """
-        pass
 
 
 class FastRandomChoice(random.Random, FastRandomChoiceInterface):

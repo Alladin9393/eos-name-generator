@@ -2,6 +2,7 @@
 Provide an implementation of the RandomNameGenerator interface.
 """
 from collections import defaultdict
+
 from numpy import random
 
 from eos_name_generator.constants import (
@@ -22,7 +23,7 @@ class RandomNameGenerator(BaseGeneratorInterface):
             self,
             seed_data_path=SEED_DATA_PATH,
             numbers_probabilities=NUMBERS_PROBABILITIES,
-            random_provider=random
+            random_provider=random,
     ):
         """
         `RandomNameGenerator` constructor.
