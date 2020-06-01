@@ -21,13 +21,13 @@ This includes 3 ways to generate a name:
     * [Random Generator](#random-generator)
     * [Recurrent Neural Network Generator](#recurrent-neural-network-generator)
     * [Markov Chain Generator](#markov-chain-generator)
+    * [EOS Name Rules](#eos-name-rules)
   * [Usage](#usage)
     * [Service](#service)
     * [Random Generator](#random-generator-usage)
     * [Recurrent Neural Network Generator](#recurrent-neural-network-generator-usage)
     * [Markov Chain Generator](#markov-chain-generator-usage)
   * [Development](#development)
-    * [Requirements](#development-requirements)
   * [Production](#production)
   * [Contributing](#contributing)
     * [Request pull request's review](#request-pull-requests-review)
@@ -73,11 +73,17 @@ The probability that an additional word will be numbers can be set by the parame
 
 #### Markov Chain Generator
 
+#### EOS Name Rules
+
+* Can only contain the characters `.abcdefghijklmnopqrstuvwxyz12345`. `a-z` (lowercase), `1-5` and `.` (period)
+* Must start with a letter
+* Must be `12` characters
+
 ## Usage
 
 #### Service
 
-Get the version of the package — eos-name-generator --version:
+Get the version of the package — `eos-name-generator --version`:
 
 ```bash
 $ eos-name-generator --version
