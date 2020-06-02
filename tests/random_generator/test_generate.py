@@ -8,7 +8,6 @@ import numpy
 from eos_name_generator import RandomNameGenerator
 from eos_name_generator.constants import EOS_NAME_LENGTH
 from eos_name_generator.errors import ValidationDataError
-from eos_name_generator.utils import FastRandomChoice
 
 
 def test_generate():

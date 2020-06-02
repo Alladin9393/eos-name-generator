@@ -18,7 +18,7 @@ def test_random_choice():
 
     fast_random = FastRandomChoice()
     numbers = list(range(infimum, supremum))
-    numbers_probabilities = [1/number_quantity] * number_quantity
+    numbers_probabilities = [1 / number_quantity] * number_quantity
     random_number = fast_random.choice(seq=numbers, p=numbers_probabilities)
 
     assert infimum <= random_number <= supremum
@@ -35,7 +35,7 @@ def test_random_choice_with_big_range():
 
     fast_random = FastRandomChoice()
     numbers = list(range(infimum, supremum))
-    numbers_probabilities = [1/number_quantity] * number_quantity
+    numbers_probabilities = [1 / number_quantity] * number_quantity
     random_number = fast_random.choice(seq=numbers, p=numbers_probabilities)
 
     assert infimum <= random_number <= supremum
@@ -54,7 +54,7 @@ def test_random_choice_collision_with_uniform_distribution():
 
     fast_random = FastRandomChoice()
     numbers = list(range(infimum, supremum))
-    numbers_probabilities = [1/number_quantity] * number_quantity
+    numbers_probabilities = [1 / number_quantity] * number_quantity
     random_numbers = []
 
     for _ in range(tests_number):
