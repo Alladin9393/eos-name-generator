@@ -2,11 +2,11 @@
 Provide an implementation of the RandomNameGenerator interface.
 """
 from collections import defaultdict
-from numpy import random
 
 from eos_name_generator.constants import (
     EOS_NAME_LENGTH,
     NUMBERS_PROBABILITIES,
+    RANDOM_PROVIDER,
     SEED_DATA_PATH,
 )
 from eos_name_generator.errors import ValidationDataError
@@ -22,15 +22,18 @@ class RandomNameGenerator(BaseGeneratorInterface):
             self,
             seed_data_path=SEED_DATA_PATH,
             numbers_probabilities=NUMBERS_PROBABILITIES,
+            random_provider=RANDOM_PROVIDER,
     ):
         """
         `RandomNameGenerator` constructor.
 
         :param seed_data_path: path to the data based on which the name will be generated.
         :param numbers_probabilities: the probability of occurrence of numbers in the generated word.
+        :param random_provider: the random provider instance.
         """
         self.seed_data_path = seed_data_path
         self.numbers_probabilities = numbers_probabilities
+        self.random_provider = random_provider
 
     def generate(self) -> str:
         """
@@ -39,7 +42,7 @@ class RandomNameGenerator(BaseGeneratorInterface):
         :return: `EOS` name str
         """
         base_dict_keys = list(self.__base_dict.keys())
-        base_word_len = random.choice(base_dict_keys, p=self.__probabilities_len_base_word)
+        base_word_len = self.random_provider.choice(base_dict_keys, p=self.__probabilities_len_base_word)
         additional_word_len = EOS_NAME_LENGTH - base_word_len
 
         base_words = self.__base_dict.get(base_word_len)
@@ -106,6 +109,33 @@ class RandomNameGenerator(BaseGeneratorInterface):
 
         self._numbers_probabilities = value
 
+    @property
+    def random_provider(self):
+        """
+        Get `random_provider` variable.
+
+        :return: random_provider instance.
+        """
+        return self._random_provider
+
+    @random_provider.setter
+    def random_provider(self, value):
+        """
+        Set `random_provider` value.
+
+        :param value: `random_provider` instance.
+        """
+        random_provider_dir = dir(value)
+        required_methods = ['choice', 'randint']
+
+        for method_name in required_methods:
+            if method_name not in random_provider_dir:
+
+                error_message = f'The interface `random_provider` does not contain {method_name} method.'
+                raise AttributeError(error_message)
+
+        self._random_provider = value
+
     def __get_base_dict(self) -> defaultdict:
         """
         Rend data from `seed_data_path`.
@@ -146,7 +176,8 @@ class RandomNameGenerator(BaseGeneratorInterface):
         :param additional_alphabet_words: additional words to be added to the base word
         :return: random name string
         """
-        base_word = base_words[random.randint(0, len(base_words) - 1)]
+        base_word_random_index = self.random_provider.randint(0, len(base_words) - 1)
+        base_word = base_words[base_word_random_index]
         additional_alphabet_words_len = len(additional_alphabet_words)
         additional_word_alphabet_probability = self.__get_probability_alphabet_additional_word(
             additional_alphabet_words_len,
@@ -154,15 +185,16 @@ class RandomNameGenerator(BaseGeneratorInterface):
 
         numbers_probabilities = self.numbers_probabilities if additional_word_alphabet_probability else 1
         additional_words_probabilities = [additional_word_alphabet_probability, numbers_probabilities]
-        is_additional_alphabet_word = random.choice([True, False], p=additional_words_probabilities)
+        is_additional_alphabet_word = self.random_provider.choice([True, False], p=additional_words_probabilities)
 
         additional_word = ''
         if is_additional_alphabet_word:
-            additional_word = additional_alphabet_words[random.randint(0, additional_alphabet_words_len - 1)]
+            additional_word_random_index = self.random_provider.randint(0, additional_alphabet_words_len - 1)
+            additional_word = additional_alphabet_words[additional_word_random_index]
         else:
             additional_numbers_len = EOS_NAME_LENGTH - len(base_word)
             for _ in range(additional_numbers_len):
-                additional_char = str(random.randint(1, 5))
+                additional_char = str(self.random_provider.randint(1, 5))
                 additional_word += additional_char
 
         random_name = base_word + additional_word
@@ -207,4 +239,4 @@ class RandomNameGenerator(BaseGeneratorInterface):
 
         :return: `RandomNameGenerator` object state
         """
-        return f'<RandomNameGenerator({self.seed_data_path}, {self.numbers_probabilities})>'
+        return f'<RandomNameGenerator({self.seed_data_path}, {self.numbers_probabilities}, {self.random_provider})>'

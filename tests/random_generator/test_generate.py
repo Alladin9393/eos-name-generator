@@ -1,8 +1,9 @@
 """
-Provide tests for command line interface's account get balance command.
+Provide tests for RandomNameGenerator.
 """
 from os.path import dirname
 import pytest
+import numpy
 
 from eos_name_generator import RandomNameGenerator
 from eos_name_generator.constants import EOS_NAME_LENGTH
@@ -54,6 +55,18 @@ def test_generate_with_custom_data():
     assert isinstance(name, str)
 
 
+def test_generate_with_numpy_random_provider():
+    """
+    Case: generate random name with `numpy.random` as `random_provider`.
+    Except: name is returned.
+    """
+    name_generator = RandomNameGenerator(random_provider=numpy.random)
+    name = name_generator.generate()
+
+    assert EOS_NAME_LENGTH == len(name)
+    assert isinstance(name, str)
+
+
 def test_generate_with_custom_numbers_probabilities():
     """
     Case: generate random name based on custom name probabilities.
@@ -94,6 +107,15 @@ def test_generate_with_invalid_data():
 
     with pytest.raises(ValidationDataError):
         RandomNameGenerator(seed_data_path=invalid_data_path)
+
+
+def test_generate_with_invalid_random_provider():
+    """
+    Case: generate random name with invalid random provider.
+    Expected: the interface `random_provider` does not contain choice method error message.
+    """
+    with pytest.raises(AttributeError):
+        RandomNameGenerator(random_provider=None)
 
 
 def test_generate_with_invalid_numbers_probabilities():
