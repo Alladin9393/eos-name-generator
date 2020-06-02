@@ -109,6 +109,15 @@ def test_generate_with_invalid_data():
         RandomNameGenerator(seed_data_path=invalid_data_path)
 
 
+def test_generate_with_invalid_random_provider():
+    """
+    Case: generate random name with invalid random provider.
+    Expected: the interface `random_provider` does not contain choice method error message.
+    """
+    with pytest.raises(AttributeError):
+        RandomNameGenerator(random_provider=None)
+
+
 def test_generate_with_invalid_numbers_probabilities():
     """
     Case: generate random name based on custom number probabilities.
