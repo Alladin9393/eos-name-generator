@@ -119,6 +119,17 @@ def test_generate_with_invalid_random_provider():
         RandomNameGenerator(random_provider_instance=None)
 
 
+def test_generate_with_invalid_data_provider():
+    """
+    Case: generate random name with invalid data provider.
+    Expected: the interface `data_provider` does not contain `get_dictionary_by_word_len` method error message.
+    """
+    generator = RandomNameGenerator()
+
+    with pytest.raises(AttributeError):
+        generator.data_provider = None
+
+
 def test_generate_with_invalid_numbers_probabilities():
     """
     Case: generate random name based on custom number probabilities.
