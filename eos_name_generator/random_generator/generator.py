@@ -149,6 +149,7 @@ class RandomNameGenerator(BaseGeneratorInterface):
     def data_provider(self, value):
         """
         Set `data_provider` variable.
+
         :param value: `data_provider` variable value.
         """
         data_provider_dir = dir(value)
