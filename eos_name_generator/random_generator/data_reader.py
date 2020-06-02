@@ -15,24 +15,6 @@ class DataReader:
     def __init__(self, data_path):
         self.data_path = data_path
 
-    @property
-    def data_path(self):
-        """
-        Get `data_path` variable.
-
-        :return: `data_path` variable value
-        """
-        return self._data_path
-
-    @data_path.setter
-    def data_path(self, value):
-        """
-        Set `data_path` variable.
-
-        :param value: `data_path` variable value
-        """
-        self._data_path = value
-
     def get_dictionary_by_word_len(self) -> defaultdict:
         """
         Read data from `seed_data_path`.

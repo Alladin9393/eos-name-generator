@@ -2,8 +2,9 @@
 Provide tests for RandomNameGenerator.
 """
 from os.path import dirname
-import pytest
+
 import numpy
+import pytest
 
 from eos_name_generator import RandomNameGenerator
 from eos_name_generator.constants import EOS_NAME_LENGTH
