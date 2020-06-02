@@ -60,7 +60,7 @@ def test_generate_with_numpy_random_provider():
     Case: generate random name with `numpy.random` as `random_provider`.
     Except: name is returned.
     """
-    name_generator = RandomNameGenerator(random_provider=numpy.random)
+    name_generator = RandomNameGenerator(random_provider_instance=numpy.random)
     name = name_generator.generate()
 
     assert EOS_NAME_LENGTH == len(name)
@@ -115,7 +115,7 @@ def test_generate_with_invalid_random_provider():
     Expected: the interface `random_provider` does not contain choice method error message.
     """
     with pytest.raises(AttributeError):
-        RandomNameGenerator(random_provider=None)
+        RandomNameGenerator(random_provider_instance=None)
 
 
 def test_generate_with_invalid_numbers_probabilities():
