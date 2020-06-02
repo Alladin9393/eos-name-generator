@@ -1,16 +1,14 @@
 """
 Provide an implementation of the RandomNameGenerator interface.
 """
-from collections import defaultdict
-
 from eos_name_generator.constants import (
     EOS_NAME_LENGTH,
     NUMBERS_PROBABILITIES,
-    RANDOM_PROVIDER,
+    RANDOM_PROVIDER_INSTANCE,
     SEED_DATA_PATH,
 )
-from eos_name_generator.errors import ValidationDataError
 from eos_name_generator.interfaces import BaseGeneratorInterface
+from eos_name_generator.random_generator.data_reader import DataReader
 
 
 class RandomNameGenerator(BaseGeneratorInterface):
@@ -22,18 +20,19 @@ class RandomNameGenerator(BaseGeneratorInterface):
             self,
             seed_data_path=SEED_DATA_PATH,
             numbers_probabilities=NUMBERS_PROBABILITIES,
-            random_provider=RANDOM_PROVIDER,
+            random_provider_instance=RANDOM_PROVIDER_INSTANCE,
     ):
         """
         `RandomNameGenerator` constructor.
 
         :param seed_data_path: path to the data based on which the name will be generated.
         :param numbers_probabilities: the probability of occurrence of numbers in the generated word.
-        :param random_provider: the random provider instance.
+        :param random_provider_instance: the random provider instance.
         """
-        self.seed_data_path = seed_data_path
+        self._seed_data_path = seed_data_path
         self.numbers_probabilities = numbers_probabilities
-        self.random_provider = random_provider
+        self.random_provider = random_provider_instance
+        self.data_provider = DataReader
 
     def generate(self) -> str:
         """
@@ -85,7 +84,8 @@ class RandomNameGenerator(BaseGeneratorInterface):
         :param value: `seed_data_path` variable value
         """
         self._seed_data_path = value
-        self.__base_dict = self.__get_base_dict()
+        self.data_provider.data_path = value
+        self.__base_dict = self.data_provider.get_dictionary_by_word_len()
         self.__probabilities_len_base_word = self.__get_probabilities_len_base_word()
 
     @property
@@ -114,7 +114,7 @@ class RandomNameGenerator(BaseGeneratorInterface):
         """
         Get `random_provider` variable.
 
-        :return: random_provider instance.
+        :return: `random_provider` instance.
         """
         return self._random_provider
 
@@ -136,37 +136,33 @@ class RandomNameGenerator(BaseGeneratorInterface):
 
         self._random_provider = value
 
-    def __get_base_dict(self) -> defaultdict:
+    @property
+    def data_provider(self):
         """
-        Rend data from `seed_data_path`.
+        Get `data_provider` variable.
 
-        Rend data from `seed_data_path` and transform it into `dictionary` object
-        where the key is the word length.
+        :return: `data_provider` instance.
         """
-        with open(self.seed_data_path) as f:
-            data = f.read().splitlines()
+        return self._data_provider
 
-        self.__validate_data(data)
-        data_dictionary_by_word_len = defaultdict(list)
-        for word in data:
-            word_len = len(word)
-            data_dictionary_by_word_len[word_len].append(word)
-
-        return data_dictionary_by_word_len
-
-    @staticmethod
-    def __validate_data(data: list):
+    @data_provider.setter
+    def data_provider(self, value):
         """
-        Seed data validation to generate the correct `eos` name.
+        Set `data_provider` variable.
 
-        :param data: data to be validated
+        :param value: `data_provider` variable value.
         """
-        for word in data:
-            is_valid_word_len = (len(word) <= EOS_NAME_LENGTH)
-            is_valid_word = word.isalpha() and word.islower() and is_valid_word_len
+        data_provider_dir = dir(value)
+        required_method = 'get_dictionary_by_word_len'
 
-            if not is_valid_word:
-                raise ValidationDataError("Data contains invalid characters or does not match the name length error")
+        if required_method not in data_provider_dir:
+
+            error_message = f'The interface `data_provider` does not contain {required_method} method.'
+            raise AttributeError(error_message)
+
+        self._data_provider = value(self.seed_data_path)
+        self.__base_dict = self.data_provider.get_dictionary_by_word_len()
+        self.__probabilities_len_base_word = self.__get_probabilities_len_base_word()
 
     def __get_random_name(self, base_words, additional_alphabet_words) -> str:
         """

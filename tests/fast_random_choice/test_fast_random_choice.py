@@ -2,6 +2,7 @@
 Provide tests for FastRandomChoice.
 """
 import random
+
 import pytest
 
 from eos_name_generator.utils import FastRandomChoice
