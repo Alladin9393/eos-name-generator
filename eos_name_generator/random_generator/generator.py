@@ -3,11 +3,10 @@ Provide an implementation of the RandomNameGenerator interface.
 """
 from collections import defaultdict
 
-from numpy import random
-
 from eos_name_generator.constants import (
     EOS_NAME_LENGTH,
     NUMBERS_PROBABILITIES,
+    RANDOM_PROVIDER,
     SEED_DATA_PATH,
 )
 from eos_name_generator.errors import ValidationDataError
@@ -23,7 +22,7 @@ class RandomNameGenerator(BaseGeneratorInterface):
             self,
             seed_data_path=SEED_DATA_PATH,
             numbers_probabilities=NUMBERS_PROBABILITIES,
-            random_provider=random,
+            random_provider=RANDOM_PROVIDER,
     ):
         """
         `RandomNameGenerator` constructor.

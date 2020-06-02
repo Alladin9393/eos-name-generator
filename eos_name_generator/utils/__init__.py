@@ -1,0 +1,1 @@
+from eos_name_generator.utils.fast_random_choice import FastRandomChoice

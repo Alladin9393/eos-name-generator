@@ -1,12 +1,14 @@
 """
-Provide tests for command line interface's account get balance command.
+Provide tests for RandomNameGenerator.
 """
 from os.path import dirname
 import pytest
+import numpy
 
 from eos_name_generator import RandomNameGenerator
 from eos_name_generator.constants import EOS_NAME_LENGTH
 from eos_name_generator.errors import ValidationDataError
+from eos_name_generator.utils import FastRandomChoice
 
 
 def test_generate():
@@ -48,6 +50,18 @@ def test_generate_with_custom_data():
     """
     custom_data_path = dirname(__file__) + '/custom_data/data.txt'
     name_generator = RandomNameGenerator(seed_data_path=custom_data_path)
+    name = name_generator.generate()
+
+    assert EOS_NAME_LENGTH == len(name)
+    assert isinstance(name, str)
+
+
+def test_generate_with_numpy_random_provider():
+    """
+    Case: generate random name with `numpy.random` as `random_provider`.
+    Except: name is returned.
+    """
+    name_generator = RandomNameGenerator(random_provider=numpy.random)
     name = name_generator.generate()
 
     assert EOS_NAME_LENGTH == len(name)
