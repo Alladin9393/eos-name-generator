@@ -119,14 +119,14 @@ def test_random_choice_with_different_lengths_sequence_and_probabilities():
     infimum = -10_000
     supremum = 10_000
     number_quantity = abs(infimum) + abs(supremum)
-    numbers = []
 
     fast_random = FastRandomChoice()
+    numbers = list(range(infimum, supremum))
     numbers_probabilities = [0] * (number_quantity - 1)
     random_index = random.randint(infimum, supremum - 1)
     numbers_probabilities[random_index] = 1
 
-    with pytest.raises(IndexError):
+    with pytest.raises(ValueError):
         fast_random.choice(seq=numbers, p=numbers_probabilities)
 
 
@@ -138,14 +138,14 @@ def test_random_choice_with_negative_probability():
     infimum = -10_000
     supremum = 10_000
     number_quantity = abs(infimum) + abs(supremum)
-    numbers = []
 
     fast_random = FastRandomChoice()
+    numbers = list(range(infimum, supremum))
     numbers_probabilities = [0] * number_quantity
     random_index = random.randint(infimum, supremum)
     numbers_probabilities[random_index] = -1
 
-    with pytest.raises(IndexError):
+    with pytest.raises(ValueError):
         fast_random.choice(seq=numbers, p=numbers_probabilities)
 
 
@@ -157,9 +157,9 @@ def test_random_choice_with_invalid_probability_sum():
     infimum = -10_000
     supremum = 10_000
     number_quantity = abs(infimum) + abs(supremum)
-    numbers = []
 
     fast_random = FastRandomChoice()
+    numbers = list(range(infimum, supremum))
     numbers_probabilities = [0] * number_quantity
     random_index = random.randint(infimum, supremum)
     numbers_probabilities[random_index] = 0.5

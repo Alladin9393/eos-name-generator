@@ -24,15 +24,14 @@ class FastRandomChoice(random.Random, FastRandomChoiceInterface):
             raise IndexError('Cannot choose from an empty sequence')
 
         if sequence_len != len(p):
-            ValueError('`seq` and `p` must have same size')
+            raise ValueError('`seq` and `p` must have same size')
 
         is_probabilities_positive = all(i >= 0 for i in p)
         if not is_probabilities_positive:
             raise ValueError('Probabilities are not non-negative')
 
         probabilities_sum = sum(p)
-        if 0.99 < probabilities_sum > 1.01:
-            print(probabilities_sum)
+        if 0.99 > probabilities_sum < 1.01:
             raise ValueError('Probabilities do not sum to 1')
 
         random_element = ''
