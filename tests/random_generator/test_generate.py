@@ -28,7 +28,7 @@ def test_sustainability_of_algorithm():
     Case: generate batch of `EOS` names to test sustainability of the algorithm.
     Expect: name is returned.
     """
-    number_of_test = 100_000
+    number_of_test = 1_000_00
     accuracy = 0.01
     name_generator = RandomNameGenerator()
     generated_names = name_generator.generate_list(num=number_of_test)
@@ -40,8 +40,7 @@ def test_sustainability_of_algorithm():
     generated_names_set = set(generated_names)
     error_range = len(generated_names) - len(generated_names_set)
 
-    assert number_of_test * accuracy < error_range
-
+    assert number_of_test * accuracy > error_range
 
 def test_generate_with_custom_data():
     """
