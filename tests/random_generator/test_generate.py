@@ -42,6 +42,7 @@ def test_sustainability_of_algorithm():
 
     assert number_of_test * accuracy > error_range
 
+
 def test_generate_with_custom_data():
     """
     Case: generate random name based on custom data.
