@@ -1,0 +1,6 @@
+include *.md
+include LICENSE
+include requirements.txt
+include requirements-dev.txt
+include eos_name_generator/random_generator/seed_data/nounlist.txt
+

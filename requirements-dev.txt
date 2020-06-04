@@ -1,0 +1,13 @@
+add-trailing-comma==2.0.1
+coverage==5.1
+flake8==3.8.1
+flake8-commas==2.0.0
+flake8-comprehensions==3.2.2
+flake8-docstrings==1.5.0
+flake8-per-file-ignores==0.8.1
+isort==4.3.21
+pep8-naming==0.10.0
+pypi-version==0.2.0
+pytest==5.4.2
+radon==4.1.0
+safety==1.9.0
