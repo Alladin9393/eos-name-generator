@@ -3,6 +3,8 @@ Provide an implementation of the FastRandomChoice interface.
 """
 import random
 
+import numpy as np
+
 from eos_name_generator.utils.fast_random_choice.interfaces import FastRandomChoiceInterface
 
 
@@ -34,16 +36,28 @@ class FastRandomChoice(random.Random, FastRandomChoiceInterface):
         if 0.99 > probabilities_sum < 1.01:
             raise ValueError('Probabilities do not sum to 1')
 
-        random_element = ''
-        is_element_fount = True
-        while is_element_fount:
-            candidate_element = super().choice(seq=seq)
-            candidate_probability_index = seq.index(candidate_element)
-            candidate_probability = p[candidate_probability_index]
-
-            random_probability = self.random()
-            if candidate_probability >= random_probability:
-                random_element = candidate_element
-                is_element_fount = False
+        element_index = self.multidimensional_shifting(probabilities=p)
+        random_element = seq[element_index]
 
         return random_element
+
+    @staticmethod
+    def multidimensional_shifting(probabilities: list) -> int:
+        """
+        Get the most probable element from probabilities sequence.
+
+        This method is a direct replacement for slow cycle python loops.
+        :param probabilities: probabilities list.
+        :return: probability index.
+        """
+        # replicate probabilities as many times
+        replicated_probabilities = np.tile(probabilities, (1, 1))
+        # get random shifting numbers & scale them correctly
+        random_shifts = np.random.random(replicated_probabilities.shape)
+        random_shifts /= random_shifts.sum(axis=1)[:, np.newaxis]
+        # shift by numbers & find largest (by finding the smallest of the negative)
+        shifted_probabilities = random_shifts - replicated_probabilities
+        index_list = np.argpartition(shifted_probabilities, 1, axis=1)[:, :1]
+
+        index = int(index_list)
+        return index
