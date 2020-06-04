@@ -1,8 +1,13 @@
 ## EOS Name Generator 
 
+[![Release](https://img.shields.io/github/release/alladin9393/eos-name-generator.svg)](https://github.com/alladin9393/eos-name-generator/releases)
+[![PyPI version shields.io](https://img.shields.io/pypi/v/eos-name-generator.svg)](https://pypi.python.org/pypi/eos-name-generator/)
 [![Build Status](https://travis-ci.com/Alladin9393/eos-name-generator.svg?branch=develop)](https://travis-ci.com/Alladin9393/eos-name-generator)
 [![CodeFactor](https://www.codefactor.io/repository/github/alladin9393/eos-name-generator/badge)](https://www.codefactor.io/repository/github/alladin9393/eos-name-generator)
 [![codecov](https://codecov.io/gh/Alladin9393/eos-name-generator/branch/develop/graph/badge.svg)](https://codecov.io/gh/Alladin9393/eos-name-generator)
+
+[![PyPI license](https://img.shields.io/pypi/l/eos-name-generator.svg)](https://pypi.python.org/pypi/eos-name-generator/)
+[![PyPI pyversions](https://img.shields.io/pypi/pyversions/eos-name-generator.svg)](https://pypi.python.org/pypi/eos-name-generator/)
 
 `EOS Name Generator` - is a python package for generating names according to [EOS name rules](#eos-name-rules).
 
