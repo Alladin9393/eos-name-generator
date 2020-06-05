@@ -8,6 +8,7 @@
 
 [![PyPI license](https://img.shields.io/pypi/l/eos-name-generator.svg)](https://pypi.python.org/pypi/eos-name-generator/)
 [![PyPI pyversions](https://img.shields.io/pypi/pyversions/eos-name-generator.svg)](https://pypi.python.org/pypi/eos-name-generator/)
+[![Downloads](https://pepy.tech/badge/eos-name-generator)](https://pepy.tech/project/eos-name-generator)
 
 `EOS Name Generator` - is a python package for generating names according to [EOS name rules](#eos-name-rules).
 
