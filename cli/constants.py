@@ -1,0 +1,7 @@
+"""
+Provide constants for command line interface.
+"""
+
+PASSED_EXIT_FROM_COMMAND_CODE = 0
+FAILED_EXIT_FROM_COMMAND_CODE = -1
+INCORRECT_ENTERED_COMMAND_CODE = 2
