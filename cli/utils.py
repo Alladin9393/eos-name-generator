@@ -14,6 +14,7 @@ def print_result(result):
 def print_errors(errors):
     """
     Print error messages to the terminal.
+
     Arguments:
         errors (string or dict): dictionary with error messages.
     References:

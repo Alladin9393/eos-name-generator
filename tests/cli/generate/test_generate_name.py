@@ -16,11 +16,12 @@ def test_get_account_balance():
     Expect: eos name is returned.
     """
     runner = CliRunner()
-    result_name = runner.invoke(cli, [
+    result = runner.invoke(cli, [
         'generate',
-        'name'
+        'name',
     ])
+    random_name = result.output.splitlines()[0]
 
-    assert PASSED_EXIT_FROM_COMMAND_CODE == result_name.exit_code
-    assert isinstance(result_name, str)
-    assert len(result_name) == EOS_NAME_LENGTH
+    assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
+    assert isinstance(random_name, str)
+    assert len(random_name) == EOS_NAME_LENGTH
