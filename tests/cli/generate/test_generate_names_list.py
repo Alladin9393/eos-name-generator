@@ -1,5 +1,5 @@
 """
-Provide tests for command line interface's generate name command.
+Provide tests for command line interface's generate names list command.
 """
 from os.path import dirname
 
@@ -13,87 +13,101 @@ from cli.entrypoint import cli
 from cli.utils import dict_to_pretty_json
 from eos_name_generator.constants import EOS_NAME_LENGTH
 
+NUMBER_OF_GENERATED_NAMES = 1000
 
-def test_generate_name():
+
+def test_generate_names_list():
     """
-    Case: generate random eos name.
-    Expect: eos name is returned.
+    Case: generate random eos list of names.
+    Expect: eos names are returned.
     """
     runner = CliRunner()
     result = runner.invoke(cli, [
         'generate',
-        'name',
+        'names_list',
+        '--num',
+        NUMBER_OF_GENERATED_NAMES
     ])
-    random_name = result.output.splitlines()[0]
+    random_names = result.output.splitlines()
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert isinstance(random_name, str)
-    assert len(random_name) == EOS_NAME_LENGTH
+    for name in random_names:
+        assert isinstance(name, str)
+        assert len(name) == EOS_NAME_LENGTH
 
 
-def test_generate_name_with_numpy_provider():
+def test_generate_names_list_with_numpy_provider():
     """
-    Case: generate random eos name with `numpy.random` as random provider.
-    Expect: eos name is returned.
+    Case: generate random eos list of names with `numpy.random` as random provider.
+    Expect: eos names are returned.
     """
     runner = CliRunner()
     result = runner.invoke(cli, [
         'generate',
-        'name',
+        'names_list',
+        '--num',
+        NUMBER_OF_GENERATED_NAMES,
         '--numpy-random-provider'
     ])
-    random_name = result.output.splitlines()[0]
+    random_names = result.output.splitlines()
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert isinstance(random_name, str)
-    assert len(random_name) == EOS_NAME_LENGTH
+    for name in random_names:
+        assert isinstance(name, str)
+        assert len(name) == EOS_NAME_LENGTH
 
 
-def test_generate_name_with_numbers_probabilities():
+def test_generate_names_list_with_numbers_probabilities():
     """
-    Case: generate random eos name with `numbers probability`.
-    Expect: eos name is returned.
+    Case: generate random eos list of names with `numbers probability`.
+    Expect: eos names are returned.
     """
     numbers_probability = 0.5
     runner = CliRunner()
     result = runner.invoke(cli, [
         'generate',
-        'name',
+        'names_list',
+        '--num',
+        NUMBER_OF_GENERATED_NAMES,
         '--numbers-probabilities',
         numbers_probability,
     ])
-    random_name = result.output.splitlines()[0]
+    random_names = result.output.splitlines()
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert isinstance(random_name, str)
-    assert len(random_name) == EOS_NAME_LENGTH
+    for name in random_names:
+        assert isinstance(name, str)
+        assert len(name) == EOS_NAME_LENGTH
 
 
-def test_generate_name_with_custom_seed_data_path():
+def test_generate_names_list_with_custom_seed_data_path():
     """
-    Case: generate random eos name with custom seed data path.
-    Expect: eos name is returned.
+    Case: generate random eos list of names with custom seed data path.
+    Expect: eos names are returned.
     """
     data_path = dirname(__file__) + '/' + '../custom_data/data.txt'
 
     runner = CliRunner()
     result = runner.invoke(cli, [
         'generate',
-        'name',
+        'names_list',
+        '--num',
+        NUMBER_OF_GENERATED_NAMES,
         '--seed-data-path',
         data_path
     ])
-    random_name = result.output.splitlines()[0]
+    random_names = result.output.splitlines()
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert isinstance(random_name, str)
-    assert len(random_name) == EOS_NAME_LENGTH
+    for name in random_names:
+        assert isinstance(name, str)
+        assert len(name) == EOS_NAME_LENGTH
 
 
-def test_generate_name_with_invalid_numbers_probabilities():
+def test_generate_names_list_with_invalid_numbers_probabilities():
     """
-    Case: generate random eos name with invalid `numbers probabilities`.
-    Expect: eos name is returned.
+    Case: generate random eos list of names with invalid `numbers probabilities`.
+    Expect: eos names are returned.
     """
     invalid_numbers_probabilities = [-1, 2]
     runner = CliRunner()
@@ -101,7 +115,9 @@ def test_generate_name_with_invalid_numbers_probabilities():
     for invalid_numbers_probability in invalid_numbers_probabilities:
         result = runner.invoke(cli, [
             'generate',
-            'name',
+            'names_list',
+            '--num',
+            NUMBER_OF_GENERATED_NAMES,
             '--numbers-probabilities',
             invalid_numbers_probability,
         ])
@@ -116,17 +132,19 @@ def test_generate_name_with_invalid_numbers_probabilities():
         assert dict_to_pretty_json(expected_error) in result.output
 
 
-def test_generate_name_with_invalid_custom_seed_data():
+def test_generate_names_list_with_invalid_custom_seed_data():
     """
-    Case: generate random eos name with invalid custom seed data.
-    Expect: eos name is returned.
+    Case: generate random eos list of names with invalid custom seed data.
+    Expect: eos names are returned.
     """
     invalid_data = dirname(__file__) + '/' + '../custom_data/invalid_data.txt'
 
     runner = CliRunner()
     result = runner.invoke(cli, [
         'generate',
-        'name',
+        'names_list',
+        '--num',
+        NUMBER_OF_GENERATED_NAMES,
         '--seed-data-path',
         invalid_data
     ])
@@ -136,17 +154,19 @@ def test_generate_name_with_invalid_custom_seed_data():
     assert expected_error in result.output
 
 
-def test_generate_name_with_invalid_custom_seed_data_path():
+def test_generate_names_list_with_invalid_custom_seed_data_path():
     """
-    Case: generate random eos name with invalid custom seed data path.
-    Expect: eos name is returned.
+    Case: generate random eos list of names with invalid custom seed data path.
+    Expect: eos names are returned.
     """
     invalid_data_path = dirname(__file__) + '/' + '../custom_data/data1.txt'
 
     runner = CliRunner()
     result = runner.invoke(cli, [
         'generate',
-        'name',
+        'names_list',
+        '--num',
+        NUMBER_OF_GENERATED_NAMES,
         '--seed-data-path',
         invalid_data_path
     ])
