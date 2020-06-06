@@ -21,6 +21,11 @@ setup(
     author_email='ember.toon@protonmail.com',
     packages=find_packages(),
     install_requires=requirements,
+    entry_points={
+        'console_scripts': [
+            'eos-name-generator = cli.entrypoint:cli',
+        ],
+    },
     include_package_data=True,
     classifiers=[
         'Operating System :: OS Independent',

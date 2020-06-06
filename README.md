@@ -33,6 +33,10 @@ This includes 3 ways to generate a name:
     * [Random Generator](#random-generator-usage)
     * [Recurrent Neural Network Generator](#recurrent-neural-network-generator-usage)
     * [Markov Chain Generator](#markov-chain-generator-usage)
+  * [CLI](#cli)
+    * [Usage](#cli-usage)
+        * [Generate name](#generate-name)
+        * [Generate list of names](#generate-list-of-names)
   * [Development](#development)
   * [Production](#production)
   * [Contributing](#contributing)
@@ -127,6 +131,95 @@ if __name__ == '__main__':
 
 #### Markov Chain Generator
 <a name="markov-chain-generator-usage"></a>
+
+## CLI
+
+### Usage
+
+#### Generate name
+
+Generate eos random name - ``` eos-name-generator generate name``:
+
+| Arguments              | Type   | Required | Description                                                          |
+| :--------------------: | :----: | :------: | -------------------------------------------------------------------- |
+| numpy-random-provider  | Bool   | No       | Used `numpy.random` as random provider instance for generation name. |
+| numbers-probabilities  | Float  | No       | The probability of occurrence of numbers in the generated word.      |
+| seed-data-path         | String | No       | Path to the data based on which the name will be generated.          |
+
+```bash
+$ eos-name-generator generate name
+brakesroller
+```
+
+Generate with `numpy-random-provider`:
+
+```bash
+$ eos-name-generator generate name --numpy-random-provider
+sightsilicon
+```
+
+Generate with `numbers-probability`:
+
+```bash
+$ eos-name-generator generate name --numbers-probabilities 1
+barges143525
+```
+
+Generate with custom seed data:
+
+```bash 
+$ eos-name-generator generate name --seed-data-path data.txt
+tamalecation
+```
+
+#### Generate list of names
+
+Generate list of eos random names - ``` eos-name-generator generate names_list``:
+
+| Arguments              | Type   | Required | Description                                                          |
+| :--------------------: | :----: | :------: | -------------------------------------------------------------------- |
+| num                    | Int    | Yes      | Number of generated names.                                           |
+| numpy-random-provider  | Bool   | No       | Used `numpy.random` as random provider instance for generation name. |
+| numbers-probabilities  | Float  | No       | The probability of occurrence of numbers in the generated word.      |
+| seed-data-path         | String | No       | Path to the data based on which the name will be generated.          |
+
+```bash
+$ eos-name-generator generate names_list --num 4
+marblesmeats
+seamanhiring
+wonderbreast
+mosseshealth
+```
+
+Generate with `numpy-random-provider`:
+
+```bash
+$ eos-name-generator generate names_list --num 4 --numpy-random-provider
+candyhalibut
+strollscales
+folklorepink
+slaveryrotor
+```
+
+Generate with `numbers-probability`:
+
+```bash
+$ eos-name-generator generate names_list --num 4 --numbers-probabilities 1
+doorbell3321
+sycamore1553
+chaplain3431
+combine25115
+```
+
+Generate with custom seed data:
+
+```bash 
+$ eos-name-generator generate names_list --num 4 --seed-data-path data.txt
+dessertsuede
+reboundbrown
+heaterssalad
+doubterpoach
+```
 
 ## Development
 

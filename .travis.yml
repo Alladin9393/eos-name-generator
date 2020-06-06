@@ -15,8 +15,8 @@ install:
 script:
   - radon cc eos_name_generator -nb --total-average
   - cat requirements.txt requirements-dev.txt | safety check --stdin
-  - isort -rc eos_name_generator tests --diff
-  - flake8 eos_name_generator && flake8 tests
+  - isort -rc eos_name_generator cli tests --diff
+  - flake8 eos_name_generator && flake8 cli && flake8 tests
   - coverage run -m pytest -vv tests
   - python3 setup.py sdist && pip3 install dist/*.tar.gz
 
