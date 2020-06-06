@@ -10,7 +10,7 @@ with open('requirements.txt') as f:
     requirements = f.read().splitlines()
 
 setup(
-    version='0.1.0',
+    version='0.2.0',
     name='eos-name-generator',
     description='Python package for generation random name which suits `EOS` name conversations',
     long_description=long_description,
