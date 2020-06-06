@@ -2,11 +2,9 @@
 Provide tests for command line interface's generate name command.
 """
 from click.testing import CliRunner
-from cli.entrypoint import cli
 
-from cli.constants import (
-    PASSED_EXIT_FROM_COMMAND_CODE,
-)
+from cli.constants import PASSED_EXIT_FROM_COMMAND_CODE
+from cli.entrypoint import cli
 from eos_name_generator.constants import EOS_NAME_LENGTH
 
 
