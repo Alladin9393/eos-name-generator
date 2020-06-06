@@ -135,10 +135,11 @@ if __name__ == '__main__':
 ## CLI
 
 ### Usage
+<a name="cli-usage"></a>
 
 #### Generate name
 
-Generate eos random name - ``` eos-name-generator generate name``:
+Generate eos random name - ``eos-name-generator generate name``:
 
 | Arguments              | Type   | Required | Description                                                          |
 | :--------------------: | :----: | :------: | -------------------------------------------------------------------- |
@@ -151,21 +152,21 @@ $ eos-name-generator generate name
 brakesroller
 ```
 
-Generate with `numpy-random-provider`:
+##### Generate with `numpy-random-provider`:
 
 ```bash
 $ eos-name-generator generate name --numpy-random-provider
 sightsilicon
 ```
 
-Generate with `numbers-probability`:
+##### Generate with `numbers-probability`:
 
 ```bash
 $ eos-name-generator generate name --numbers-probabilities 1
 barges143525
 ```
 
-Generate with custom seed data:
+##### Generate with custom seed data:
 
 ```bash 
 $ eos-name-generator generate name --seed-data-path data.txt
@@ -174,7 +175,7 @@ tamalecation
 
 #### Generate list of names
 
-Generate list of eos random names - ``` eos-name-generator generate names_list``:
+Generate list of eos random names - ``eos-name-generator generate names_list``:
 
 | Arguments              | Type   | Required | Description                                                          |
 | :--------------------: | :----: | :------: | -------------------------------------------------------------------- |
@@ -191,7 +192,7 @@ wonderbreast
 mosseshealth
 ```
 
-Generate with `numpy-random-provider`:
+##### Generate with `numpy-random-provider`:
 
 ```bash
 $ eos-name-generator generate names_list --num 4 --numpy-random-provider
@@ -201,7 +202,7 @@ folklorepink
 slaveryrotor
 ```
 
-Generate with `numbers-probability`:
+##### Generate with `numbers-probability`:
 
 ```bash
 $ eos-name-generator generate names_list --num 4 --numbers-probabilities 1
@@ -211,7 +212,7 @@ chaplain3431
 combine25115
 ```
 
-Generate with custom seed data:
+##### Generate with custom seed data:
 
 ```bash 
 $ eos-name-generator generate names_list --num 4 --seed-data-path data.txt
