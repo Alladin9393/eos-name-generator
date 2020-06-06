@@ -26,7 +26,7 @@ def test_generate_names_list():
         'generate',
         'names_list',
         '--num',
-        NUMBER_OF_GENERATED_NAMES
+        NUMBER_OF_GENERATED_NAMES,
     ])
     random_names = result.output.splitlines()
 
@@ -47,7 +47,7 @@ def test_generate_names_list_with_numpy_provider():
         'names_list',
         '--num',
         NUMBER_OF_GENERATED_NAMES,
-        '--numpy-random-provider'
+        '--numpy-random-provider',
     ])
     random_names = result.output.splitlines()
 
@@ -94,7 +94,7 @@ def test_generate_names_list_with_custom_seed_data_path():
         '--num',
         NUMBER_OF_GENERATED_NAMES,
         '--seed-data-path',
-        data_path
+        data_path,
     ])
     random_names = result.output.splitlines()
 
@@ -124,8 +124,8 @@ def test_generate_names_list_with_invalid_numbers_probabilities():
 
         expected_error = {
             "numbers_probabilities": [
-                "Numbers probabilities must be between 0 and 1."
-            ]
+                "Numbers probabilities must be between 0 and 1.",
+            ],
         }
 
         assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
@@ -146,7 +146,7 @@ def test_generate_names_list_with_invalid_custom_seed_data():
         '--num',
         NUMBER_OF_GENERATED_NAMES,
         '--seed-data-path',
-        invalid_data
+        invalid_data,
     ])
     expected_error = 'Data contains invalid characters or does not match the name length error'
 
@@ -168,7 +168,7 @@ def test_generate_names_list_with_invalid_custom_seed_data_path():
         '--num',
         NUMBER_OF_GENERATED_NAMES,
         '--seed-data-path',
-        invalid_data_path
+        invalid_data_path,
     ])
     expected_error = f'[Errno 2] No such file or directory: \'{invalid_data_path}\''
 

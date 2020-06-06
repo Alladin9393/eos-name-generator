@@ -40,7 +40,7 @@ def test_generate_name_with_numpy_provider():
     result = runner.invoke(cli, [
         'generate',
         'name',
-        '--numpy-random-provider'
+        '--numpy-random-provider',
     ])
     random_name = result.output.splitlines()[0]
 
@@ -81,7 +81,7 @@ def test_generate_name_with_custom_seed_data_path():
         'generate',
         'name',
         '--seed-data-path',
-        data_path
+        data_path,
     ])
     random_name = result.output.splitlines()[0]
 
@@ -108,8 +108,8 @@ def test_generate_name_with_invalid_numbers_probabilities():
 
         expected_error = {
             "numbers_probabilities": [
-                "Numbers probabilities must be between 0 and 1."
-            ]
+                "Numbers probabilities must be between 0 and 1.",
+            ],
         }
 
         assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
@@ -128,7 +128,7 @@ def test_generate_name_with_invalid_custom_seed_data():
         'generate',
         'name',
         '--seed-data-path',
-        invalid_data
+        invalid_data,
     ])
     expected_error = 'Data contains invalid characters or does not match the name length error'
 
@@ -148,7 +148,7 @@ def test_generate_name_with_invalid_custom_seed_data_path():
         'generate',
         'name',
         '--seed-data-path',
-        invalid_data_path
+        invalid_data_path,
     ])
     expected_error = f'[Errno 2] No such file or directory: \'{invalid_data_path}\''
 
